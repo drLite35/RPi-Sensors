@@ -88,10 +88,10 @@ class RPiSensorActivity(activity.Activity):
         self.distance_label.get_style_context().add_class("sensor-label")
         sensor_box.pack_start(self.distance_label, False, False, 0)
 
-        # Light label
-        self.light_label = Gtk.Label()
-        self.light_label.get_style_context().add_class("sensor-label")
-        sensor_box.pack_start(self.light_label, False, False, 0)
+        # # Light label
+        # self.light_label = Gtk.Label()
+        # self.light_label.get_style_context().add_class("sensor-label")
+        # sensor_box.pack_start(self.light_label, False, False, 0)
 
         # Motion label
         self.motion_label = Gtk.Label()
