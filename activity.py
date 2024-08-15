@@ -47,8 +47,8 @@ class RPiSensorActivity(activity.Activity):
         # Initialize the HC-SR04 Ultrasonic sensor
         self.distance_sensor = adafruit_hcsr04.HCSR04(trigger_pin=board.D5, echo_pin=board.D6)
 
-        # Initialize the TSL2561 Light Sensor
-        self.light_sensor = adafruit_tsl2561.TSL2561(board.I2C())
+        # # Initialize the TSL2561 Light Sensor
+        # self.light_sensor = adafruit_tsl2561.TSL2561(board.I2C())
 
         # Initialize the PIR Motion Sensor
         self.pir_sensor = digitalio.DigitalInOut(board.D7)
