@@ -91,7 +91,6 @@ class RPiSensorActivity(activity.Activity):
             color: #ffffff; /* White text color */
             margin: 10px;
             border: 2px solid #2a70b1; /* Darker blue border */
-            width: 250px; /* Fixed width */
             text-align: center; /* Center text */
         }
 
