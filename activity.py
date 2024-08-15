@@ -3,6 +3,9 @@ import time
 import board
 import adafruit_dht
 import adafruit_hcsr04
+import adafruit_tsl2561
+import adafruit_mq9
+import digitalio
 
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk, Gdk, GLib
@@ -45,6 +48,16 @@ class RPiSensorActivity(activity.Activity):
         # Initialize the HC-SR04 Ultrasonic sensor
         self.distance_sensor = adafruit_hcsr04.HCSR04(trigger_pin=board.D5, echo_pin=board.D6)
 
+        # Initialize the TSL2561 Light Sensor
+        self.light_sensor = adafruit_tsl2561.TSL2561(board.I2C())
+
+        # Initialize the MQ9 Gas Sensor
+        self.gas_sensor = adafruit_mq9.MQ9(board.A0)
+
+        # Initialize the PIR Motion Sensor
+        self.pir_sensor = digitalio.DigitalInOut(board.D7)
+        self.pir_sensor.direction = digitalio.Direction.INPUT
+
     def create_gui(self):
         # Main container
         self.main_box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=20)
@@ -78,6 +91,21 @@ class RPiSensorActivity(activity.Activity):
         self.distance_label = Gtk.Label()
         self.distance_label.get_style_context().add_class("sensor-label")
         sensor_box.pack_start(self.distance_label, False, False, 0)
+
+        # Light label
+        self.light_label = Gtk.Label()
+        self.light_label.get_style_context().add_class("sensor-label")
+        sensor_box.pack_start(self.light_label, False, False, 0)
+
+        # Gas label
+        self.gas_label = Gtk.Label()
+        self.gas_label.get_style_context().add_class("sensor-label")
+        sensor_box.pack_start(self.gas_label, False, False, 0)
+
+        # Motion label
+        self.motion_label = Gtk.Label()
+        self.motion_label.get_style_context().add_class("sensor-label")
+        sensor_box.pack_start(self.motion_label, False, False, 0)
 
         # Add sensor box to the main container
         self.main_box.pack_start(sensor_box, True, True, 0)
@@ -125,6 +153,27 @@ class RPiSensorActivity(activity.Activity):
             self.distance_label.set_text(f"Distance: {distance:.1f} cm")
         except RuntimeError as e:
             self.distance_label.set_text(f"Distance: Error reading ({str(e)})")
+
+        try:
+            # Read light intensity
+            light = self.light_sensor.lux
+            self.light_label.set_text(f"Light: {light:.1f} lux")
+        except RuntimeError as e:
+            self.light_label.set_text(f"Light: Error reading ({str(e)})")
+
+        try:
+            # Read gas level
+            gas = self.gas_sensor.raw
+            self.gas_label.set_text(f"Gas: {gas:.1f}")
+        except RuntimeError as e:
+            self.gas_label.set_text(f"Gas: Error reading ({str(e)})")
+
+        try:
+            # Read motion detection
+            motion = self.pir_sensor.value
+            self.motion_label.set_text(f"Motion: {'Detected' if motion else 'Not detected'}")
+        except RuntimeError as e:
+            self.motion_label.set_text(f"Motion: Error reading ({str(e)})")
 
         return True  # Continue to call this function
 
