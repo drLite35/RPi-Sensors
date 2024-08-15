@@ -11,7 +11,6 @@ from sugar3.graphics.toolbarbox import ToolbarBox
 from sugar3.activity.widgets import StopButton
 from sugar3.activity.widgets import ActivityToolbarButton
 
-
 class RPiSensorActivity(activity.Activity):
     def __init__(self, handle):
         activity.Activity.__init__(self, handle)
@@ -55,15 +54,19 @@ class RPiSensorActivity(activity.Activity):
         self.main_box.set_margin_end(30)
         self.main_box.set_margin_top(30)
         self.main_box.set_margin_bottom(30)
-        self.main_box.override_background_color(Gtk.StateFlags.NORMAL, Gdk.RGBA(0.95, 0.95, 0.95, 1))
+        self.main_box.override_background_color(Gtk.StateFlags.NORMAL, Gdk.RGBA(1, 1, 1, 1))
         self.set_canvas(self.main_box)
 
         # Container for sensor labels
         sensor_box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=20)
         sensor_box.set_halign(Gtk.Align.CENTER)
         sensor_box.set_valign(Gtk.Align.CENTER)
+        sensor_box.set_margin_start(30)
+        sensor_box.set_margin_end(30)
+        sensor_box.set_margin_top(30)
+        sensor_box.set_margin_bottom(30)
 
-        # Styling for labels
+        # Load CSS
         self.load_css()
 
         # Humidity label
@@ -91,11 +94,12 @@ class RPiSensorActivity(activity.Activity):
             color: #ffffff; /* White text color */
             margin: 10px;
             border: 2px solid #2a70b1; /* Darker blue border */
-            text-align: center; /* Center text */
         }
 
         .main-box {
             background-color: #ffffff; /* White background for the main container */
+            border-radius: 25px; /* Rounded corners for the main container */
+            padding: 20px; /* Padding inside the container */
         }
         """
         provider = Gtk.CssProvider()
@@ -123,7 +127,6 @@ class RPiSensorActivity(activity.Activity):
             self.distance_label.set_text(f"Distance: Error reading ({str(e)})")
 
         return True  # Continue to call this function
-
 
 if __name__ == "__main__":
     activity = RPiSensorActivity(None)
