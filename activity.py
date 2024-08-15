@@ -68,17 +68,7 @@ class RPiSensorActivity(activity.Activity):
         sensor_box.set_valign(Gtk.Align.CENTER)
 
         # Styling for labels
-        label_style = """
-        .sensor-label {
-            background-color: #e0e0e0;
-            border-radius: 10px;
-            padding: 20px;
-            font-family: monospace;
-            font-size: 24px;
-            color: #333;
-        }
-        """
-        self.load_css(label_style)
+        self.load_css()
 
         # Humidity label
         self.humidity_label = Gtk.Label()
@@ -96,7 +86,18 @@ class RPiSensorActivity(activity.Activity):
         self.main_box.pack_start(sensor_box, True, True, 0)
         self.main_box.show_all()
 
-    def load_css(self, css):
+    def load_css(self):
+        css = b"""
+        .sensor-label {
+            background-color: #e0e0e0;
+            border-radius: 10px;
+            padding: 20px;
+            font-family: monospace;
+            font-size: 24px;
+            color: #333;
+            margin: 10px;
+        }
+        """
         provider = Gtk.CssProvider()
         provider.load_from_data(css)
         Gtk.StyleContext.add_provider_for_screen(
