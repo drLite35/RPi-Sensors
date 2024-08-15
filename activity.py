@@ -73,11 +73,13 @@ class RPiSensorActivity(activity.Activity):
         # Humidity label
         self.humidity_label = Gtk.Label()
         self.humidity_label.get_style_context().add_class("sensor-label")
+        self.humidity_label.set_halign(Gtk.Align.CENTER)
         sensor_box.pack_start(self.humidity_label, False, False, 0)
 
         # Distance label
         self.distance_label = Gtk.Label()
         self.distance_label.get_style_context().add_class("sensor-label")
+        self.distance_label.set_halign(Gtk.Align.CENTER)
         sensor_box.pack_start(self.distance_label, False, False, 0)
 
         # Add sensor box to the main container
@@ -94,8 +96,7 @@ class RPiSensorActivity(activity.Activity):
             font-size: 24px;
             color: #ffffff; /* White text color */
             margin: 10px;
-            display: block;
-            text-align: center; /* Align text to center */
+            text-align: center; /* Center text */
         }
 
         .main-box {
