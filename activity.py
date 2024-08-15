@@ -1,7 +1,6 @@
 import gi
 import time
 import board
-import digitalio
 import adafruit_dht
 import adafruit_hcsr04
 
@@ -11,7 +10,6 @@ from sugar3.activity import activity
 from sugar3.graphics.toolbarbox import ToolbarBox
 from sugar3.activity.widgets import StopButton
 from sugar3.activity.widgets import ActivityToolbarButton
-from sugar3.graphics.radiotoolbutton import RadioToolButton
 
 
 class RPiSensorActivity(activity.Activity):
@@ -50,8 +48,7 @@ class RPiSensorActivity(activity.Activity):
 
     def create_gui(self):
         # Main container
-        self.main_box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
-        self.main_box.set_spacing(20)
+        self.main_box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=20)
         self.main_box.set_halign(Gtk.Align.CENTER)
         self.main_box.set_valign(Gtk.Align.CENTER)
         self.main_box.set_margin_start(30)
@@ -62,8 +59,7 @@ class RPiSensorActivity(activity.Activity):
         self.set_canvas(self.main_box)
 
         # Container for sensor labels
-        sensor_box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
-        sensor_box.set_spacing(20)
+        sensor_box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=20)
         sensor_box.set_halign(Gtk.Align.CENTER)
         sensor_box.set_valign(Gtk.Align.CENTER)
 
@@ -73,13 +69,11 @@ class RPiSensorActivity(activity.Activity):
         # Humidity label
         self.humidity_label = Gtk.Label()
         self.humidity_label.get_style_context().add_class("sensor-label")
-        self.humidity_label.set_halign(Gtk.Align.CENTER)
         sensor_box.pack_start(self.humidity_label, False, False, 0)
 
         # Distance label
         self.distance_label = Gtk.Label()
         self.distance_label.get_style_context().add_class("sensor-label")
-        self.distance_label.set_halign(Gtk.Align.CENTER)
         sensor_box.pack_start(self.distance_label, False, False, 0)
 
         # Add sensor box to the main container
@@ -90,12 +84,14 @@ class RPiSensorActivity(activity.Activity):
         css = b"""
         .sensor-label {
             background-color: #4a90e2; /* Blue background for labels */
-            border-radius: 12px;
+            border-radius: 10px;
             padding: 20px;
             font-family: monospace;
             font-size: 24px;
             color: #ffffff; /* White text color */
             margin: 10px;
+            border: 2px solid #2a70b1; /* Darker blue border */
+            width: 250px; /* Fixed width */
             text-align: center; /* Center text */
         }
 
