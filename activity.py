@@ -51,22 +51,57 @@ class RPiSensorActivity(activity.Activity):
     def create_gui(self):
         # Main container
         self.main_box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
-        self.main_box.set_spacing(10)
+        self.main_box.set_spacing(20)
         self.main_box.set_halign(Gtk.Align.CENTER)
         self.main_box.set_valign(Gtk.Align.CENTER)
+        self.main_box.set_margin_start(30)
+        self.main_box.set_margin_end(30)
+        self.main_box.set_margin_top(30)
+        self.main_box.set_margin_bottom(30)
+        self.main_box.override_background_color(Gtk.StateFlags.NORMAL, Gdk.RGBA(1, 1, 1, 1))
         self.set_canvas(self.main_box)
+
+        # Container for sensor labels
+        sensor_box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
+        sensor_box.set_spacing(20)
+        sensor_box.set_halign(Gtk.Align.CENTER)
+        sensor_box.set_valign(Gtk.Align.CENTER)
+
+        # Styling for labels
+        label_style = """
+        .sensor-label {
+            background-color: #e0e0e0;
+            border-radius: 10px;
+            padding: 20px;
+            font-family: monospace;
+            font-size: 24px;
+            color: #333;
+        }
+        """
+        self.load_css(label_style)
 
         # Humidity label
         self.humidity_label = Gtk.Label()
         self.humidity_label.get_style_context().add_class("sensor-label")
-        self.main_box.pack_start(self.humidity_label, False, False, 0)
+        self.humidity_label.set_halign(Gtk.Align.CENTER)
+        sensor_box.pack_start(self.humidity_label, False, False, 0)
 
         # Distance label
         self.distance_label = Gtk.Label()
         self.distance_label.get_style_context().add_class("sensor-label")
-        self.main_box.pack_start(self.distance_label, False, False, 10)
+        self.distance_label.set_halign(Gtk.Align.CENTER)
+        sensor_box.pack_start(self.distance_label, False, False, 0)
 
+        # Add sensor box to the main container
+        self.main_box.pack_start(sensor_box, True, True, 0)
         self.main_box.show_all()
+
+    def load_css(self, css):
+        provider = Gtk.CssProvider()
+        provider.load_from_data(css)
+        Gtk.StyleContext.add_provider_for_screen(
+            Gdk.Screen.get_default(), provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION
+        )
 
     def update_readings(self):
         try:
