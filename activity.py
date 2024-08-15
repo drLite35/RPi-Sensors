@@ -146,13 +146,6 @@ class RPiSensorActivity(activity.Activity):
             self.distance_label.set_text(f"Distance: Error reading ({str(e)})")
 
         try:
-            # Read light intensity
-            light = self.light_sensor.lux
-            self.light_label.set_text(f"Light: {light:.1f} lux")
-        except RuntimeError as e:
-            self.light_label.set_text(f"Light: Error reading ({str(e)})")
-
-        try:
             # Read motion detection
             motion = self.pir_sensor.value
             self.motion_label.set_text(f"Motion: {'Detected' if motion else 'Not detected'}")
