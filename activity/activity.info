@@ -1,8 +1,0 @@
-[Activity]
-name = RPiSensors
-activity_version = 1
-bundle_id = org.sugarlabs.RPiSensors
-exec = sugar-activity3 activity.RPiSensorsActivity
-icon = sensor
-license = GPLv2+
-repository = https://github.com/drLite35/RPi-Sensors
