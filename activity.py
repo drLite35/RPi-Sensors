@@ -4,7 +4,6 @@ import board
 import adafruit_dht
 import adafruit_hcsr04
 import adafruit_tsl2561
-import adafruit_mq9
 import digitalio
 
 gi.require_version("Gtk", "3.0")
@@ -51,9 +50,6 @@ class RPiSensorActivity(activity.Activity):
         # Initialize the TSL2561 Light Sensor
         self.light_sensor = adafruit_tsl2561.TSL2561(board.I2C())
 
-        # Initialize the MQ9 Gas Sensor
-        self.gas_sensor = adafruit_mq9.MQ9(board.A0)
-
         # Initialize the PIR Motion Sensor
         self.pir_sensor = digitalio.DigitalInOut(board.D7)
         self.pir_sensor.direction = digitalio.Direction.INPUT
@@ -96,11 +92,6 @@ class RPiSensorActivity(activity.Activity):
         self.light_label = Gtk.Label()
         self.light_label.get_style_context().add_class("sensor-label")
         sensor_box.pack_start(self.light_label, False, False, 0)
-
-        # Gas label
-        self.gas_label = Gtk.Label()
-        self.gas_label.get_style_context().add_class("sensor-label")
-        sensor_box.pack_start(self.gas_label, False, False, 0)
 
         # Motion label
         self.motion_label = Gtk.Label()
@@ -160,13 +151,6 @@ class RPiSensorActivity(activity.Activity):
             self.light_label.set_text(f"Light: {light:.1f} lux")
         except RuntimeError as e:
             self.light_label.set_text(f"Light: Error reading ({str(e)})")
-
-        try:
-            # Read gas level
-            gas = self.gas_sensor.raw
-            self.gas_label.set_text(f"Gas: {gas:.1f}")
-        except RuntimeError as e:
-            self.gas_label.set_text(f"Gas: Error reading ({str(e)})")
 
         try:
             # Read motion detection
