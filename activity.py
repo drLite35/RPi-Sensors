@@ -58,7 +58,7 @@ class RPiSensorActivity(activity.Activity):
         self.main_box.set_margin_end(30)
         self.main_box.set_margin_top(30)
         self.main_box.set_margin_bottom(30)
-        self.main_box.override_background_color(Gtk.StateFlags.NORMAL, Gdk.RGBA(1, 1, 1, 1))
+        self.main_box.override_background_color(Gtk.StateFlags.NORMAL, Gdk.RGBA(0.95, 0.95, 0.95, 1))
         self.set_canvas(self.main_box)
 
         # Container for sensor labels
@@ -89,13 +89,18 @@ class RPiSensorActivity(activity.Activity):
     def load_css(self):
         css = b"""
         .sensor-label {
-            background-color: #e0e0e0;
-            border-radius: 10px;
+            background-color: #4a90e2; /* Blue background for labels */
+            border-radius: 12px;
             padding: 20px;
             font-family: monospace;
             font-size: 24px;
-            color: #333;
+            color: #ffffff; /* White text color */
             margin: 10px;
+            text-align: center;
+        }
+
+        .main-box {
+            background-color: #ffffff; /* White background for the main container */
         }
         """
         provider = Gtk.CssProvider()
